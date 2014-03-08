@@ -33,11 +33,13 @@
 			L.esri.basemapLayer("Topographic").addTo(map);
 
 			L.esri.heatMapFeatureLayer("http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Police_Incidents_Last30/MapServer/0/query?geometry={%22rings%22:[[[-75.392990,39.846504],%20[-74.912338,39.846504],%20[-74.912338,40.161559],%20[-75.392990,40.161559]]],%22spatialReference%22:{%22wkid%22:4326}}&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&outFields=*&inSR=4326&outSR=4326&f=pjson&pretty=true", {
+				 max: 0.9,
 				 radius: 20,
+				 blur: 10,
 				  gradient: {
-				    0.4: "#ff0000",
+				    0.2: "#ff0000",
 				    0.65: "#330066",
-				    1: "#000000"
+				    0.7: "#000000"
 				  }
 
 	      	}).addTo(map);
