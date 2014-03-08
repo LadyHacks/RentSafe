@@ -1,6 +1,7 @@
-﻿RentSafe
+RentSafe
 
 ========
+VISIT RentSafe on: http://ladyhacks.github.io/RentSafe/index.html
 
 
 collaborate available philly rentals with crime data
