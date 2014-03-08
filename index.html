@@ -47,7 +47,7 @@
 
 			map.on('locationfound', onLocationFound);
 			map.on('locationerror', onLocationError);
-			map.locate({setView: true, maxZoom: 15});
+			map.locate({setView: true});
 
 			map.on('locationfound', function(evt) {
 				var lati = evt.latitude;
@@ -64,7 +64,6 @@
 				 blur: 15,
 				  gradient: {
 				    0.2: "#ff0000",
-				    0.65: "#330066",
 				    0.7: "#000000"
 				  }
 
