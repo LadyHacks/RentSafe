@@ -1,3 +1,7 @@
+.padding-top-20 {
+  padding-top: 20px;
+}
+
 meta.foundation-mq-small {
   font-family: "only screen and (min-width: 768px)";
   width: 768px; }
