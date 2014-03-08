@@ -1,17 +1,14 @@
 RentSafe
-
 ========
-VISIT RentSafe on: http://ladyhacks.github.io/RentSafe/index.html
+
+Demo at: http://ladyhacks.github.io/RentSafe/index.html
 
 
-collaborate available philly rentals with crime data
+Mapping philly rental listings from Craigslist and Apartments.com using 3taps and crime data from phlapi.com.
 
 
-google docs 
+Development notes on Google Docs:
 https://docs.google.com/document/d/1on_T8RB7HNuW9GzjKH4GB_8hqCnNxbOIXWoDmeV7br4/edit
-
-
-
 
 3taps documentation: http://docs.3taps.com/index.html
 
