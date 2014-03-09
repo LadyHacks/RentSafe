@@ -47,12 +47,12 @@
 
 			map.on('locationfound', onLocationFound);
 			map.on('locationerror', onLocationError);
-			map.locate({setView: true});
+			map.locate({setView: true, maxZoom: 15});
 
 			map.on('locationfound', function(evt) {
 				var lati = evt.latitude;
 				var longi = evt.longitude;
-				map.setView([lati, longi], 15);
+				map.setView([lati, longi]);
 			})
 
 
