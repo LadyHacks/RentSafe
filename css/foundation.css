@@ -22,7 +22,10 @@ body {
   font-size: 100%; }
 
 body {
-  background: #3E606F;
+  background: url('http://upload.wikimedia.org/wikipedia/commons/5/5c/Philly_Street_Commons.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
   color: #000000;
   padding: 0;
   margin: 0;
@@ -4175,7 +4178,7 @@ ul.pagination {
   border-color: #d9d9d9;
   margin-bottom: 1.25em;
   padding: 1.25em;
-  background: #f2f2f2; }
+  background: rgba(255,255,255,0.8); }
   .panel > :first-child {
     margin-top: 0; }
   .panel > :last-child {
