@@ -30,18 +30,99 @@
 			var map = L.map('map').setView([39.9522, -75.1639], 15);
 
 			L.esri.basemapLayer("Topographic").addTo(map);
+				
+			function getCrimes (){
+				//TO DO: Get Crimes from previous 6 months
+				/*
+				var today = new Date(); 
+				var start_date = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
+				var end_date = (today.getFullYear())+"-"+(today.getMonth()-1)+"-"+today.getDate();
 
-			L.esri.heatMapFeatureLayer("http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Police_Incidents_Last30/MapServer/0/query?geometry={%22rings%22:[[[-75.392990,39.846504],%20[-74.912338,39.846504],%20[-74.912338,40.161559],%20[-75.392990,40.161559]]],%22spatialReference%22:{%22wkid%22:4326}}&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&outFields=*&inSR=4326&outSR=4326&f=pjson&pretty=true", {
-				 radius: 20,
-				  gradient: {
-				    0.4: "#ff0000",
-				    0.65: "#330066",
-				    1: "#000000"
-				  }
+				var url = "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Police_Incidents/MapServer/0/query?&where=DISPATCH_DATE>="+start_date+"ANDDISPATCH_DATE <="+end_date+"ANDUCR_GENERAL>=100ANDUCR_GENERAL<=600&geometry={%22rings%22:[[[-75.392990,39.846504],%20[-74.912338,39.846504],%20[-74.912338,40.161559],%20[-75.392990,40.161559]]],%22spatialReference%22:{%22wkid%22:4326}}&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&outFields=*&inSR=4326&outSR=4326&f=pjson&pretty=true";
+				//where=DISPATCH_DATE>="+start_date+"ANDDISPATCH_DATE <="+end_date+"ANDUCR_GENERAL>=100ANDUCR_GENERAL<=600
+				console.log(start_date, end_date)
 
-	      	}).addTo(map);
+				if(start_date == undefined || end_date == undefined){
+				*/
+				var url = "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Police_Incidents_Last30/MapServer/0/query?geometry={%22rings%22:[[[-75.392990,39.846504],%20[-74.912338,39.846504],%20[-74.912338,40.161559],%20[-75.392990,40.161559]]],%22spatialReference%22:{%22wkid%22:4326}}&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&outFields=*&inSR=4326&outSR=4326&f=pjson&pretty=true";
 
-	      	var minDate = Math.round((new Date().getTime()/1000)-(60*24*60*60));
+				$.getJSON(url, 
+					function (data) {
+						for (var i=0; i<data.features.length; i++) {
+							var lat = data.features[i].attributes["POINT_Y"];
+							var lng = data.features[i].attributes["POINT_X"];
+							var loc = data.features[i].attributes["LOCATION_BLOCK"];
+							var code = data.features[i].attributes["TEXT_GENERAL_CODE"];
+							var date = data.features[i].attributes["DISPATCH_DATE"];
+
+							var color = "#FFFFFF";
+							switch(code.toString()) {
+								case "Thefts":
+								  color = "#FF9933";
+								  break;
+								case "Theft from Vehicle":
+								  color = "#FF9933";
+								  break;
+								case "Motor Vehicle Theft":
+								  color = "#FF9933";
+								  break;
+								case "Recovered Stolen Motor Vehicle":
+								  color = "#FFFF66";
+								  break;
+								case "Aggravated Assault":
+								  color = "#FCC00";
+								  break;
+								case "Aggravated Assault Firearm":
+								  color = "#FFFF00";
+								  break;
+								case "Aggravated Assault No Firearm":
+								  color = "#FFCC00";
+								  break;
+								case "Robbery No Firearm":
+								  color = "#FF8533";
+								  break;
+								case "Robbery Firearm":
+								  color = "#FF6600";
+								  break;
+								case "Burglary Residential":
+								  color = "#FF5C33";
+								  break;
+								case "Burglary Non-Residential":
+								  color = "#FF3300";
+								  break;
+								case "Rape":
+								  color = "#FF5050";
+								  break;
+								case "Homicide":
+								  color = "#800000";
+								  break;
+								case "Homicide - Criminal":
+								  color = "#CC0000";
+								  break;
+								case "Homicide - Justifiable":
+								  color = "#FF0000";
+								  break
+								case "Homicide - Gross Negligence":
+								  color = "#FF0000";
+								  break
+								default:
+								  color = "#FFFFFF";
+							};
+							var marker = L.circleMarker([lat, lng], {
+							    radius: 8,
+							    fillColor: color,
+							    color: color,
+							    weight: 1,
+							    opacity: 1,
+							    fillOpacity: 0.8
+							}).addTo(map);
+
+							marker.bindPopup("<h4>" + code + "</h4><h5> Date: " + date + "</h5><h6>Address: " + loc + "</h6>");
+						}
+					}
+				)
+			}
+			var minDate = Math.round((new Date().getTime()/1000)-(60*24*60*60));
 			function getPage (page){
 				var url = "http://search.3taps.com/?auth_token=e89e3fd24f2e7dae86975eca23704e87&location.city=USA-PHI-PHI&category_group=RRRR&rpp=100&retvals=location,external_url,price,heading,timestamp&timestamp="+minDate+"..";
 				if (page!==undefined) {
@@ -49,7 +130,6 @@
 				}
 				$.getJSON(url, 
 					function (data) {
-						// console.log(data)
 						for (var i=0; i<data.postings.length; i++) {
 							var lat = data.postings[i].location["lat"]
 							var lng = data.postings[i].location["long"]
@@ -70,8 +150,8 @@
 					})
 			}
 			getPage();
+			getCrimes();
 
-	      	
 		</script>
 	</body>
 </html>
