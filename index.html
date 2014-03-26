@@ -1,49 +1,92 @@
 <html>
 	<head>
-		<title>- Rent Safe -</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Rent Safe</title>
 
 		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
 		<link rel="stylesheet" href="css/foundation.min.css">
 		<link href='http://fonts.googleapis.com/css?family=Dancing+Script:400,700' rel='stylesheet' type='text/css'>
 
 		<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
 		<script src="esri-leaflet-src.js"></script>
 		<script src="esri-leaflet-master/dist/extras/heatmap-feature-layer-src.js"></script>
 		<script src="esri-leaflet-master/examples/lib/leaflet-heat/leaflet-heat.js"></script>
+		<!--<script src="//rawgithub.com/domoritz/leaflet-locatecontrol/gh-pages/src/L.Control.Locate.js" ></script>-->
 
 		<style>
-			#map { height: 70%; }
+			#map { height: 70%;
+				border-style:solid;
+					border-width: 3px; }
 		</style>
 	</head>
-	<body>
-		<div class = "panel">
-		<h1> Rent Safe</h1>
-	</div>
-		<div class = "large-11 large-centered columns padding-top-20">
-			<div id="map"></div>
+	<body>	
+		<div class = "large-11 large-centered columns">
+			<br>
+			<div class = "panel">
+				<h1> - Rent Safe - </h1>
+				<div id="map"></div>
+				<br>
+			</div>
 		</div>
 
 		<script>
 
 			var map = L.map('map').setView([39.9522, -75.1639], 15);
+			
+
+			//GeoLocation
+			/*function onLocationFound(e) {
+			var radius = e.accuracy / 20;
+
+			L.marker(e.latlng).addTo(map)
+				.bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+			L.circle(e.latlng, radius).addTo(map);
+			}
+
+			function onLocationError(e) {
+					alert(e.message);
+			}
+
+			map.on('locationfound', onLocationFound);
+			map.on('locationerror', onLocationError);
+			map.locate({setView: true, maxZoom: 15});
+
+			map.on('locationfound', function(evt) {
+				var lati = evt.latitude;
+				var longi = evt.longitude;
+				map.setView([lati, longi]);
+			})*/
+
 
 			L.esri.basemapLayer("Topographic").addTo(map);
 				
 			function getCrimes (){
-				//TO DO: Get Crimes from previous 6 months
-				/*
-				var today = new Date(); 
-				var start_date = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
-				var end_date = (today.getFullYear())+"-"+(today.getMonth()-1)+"-"+today.getDate();
+//TO DO: Get Crimes from previous 6 months
+/*
+var today = new Date(); 
+var start_date = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
+var end_date = (today.getFullYear())+"-"+(today.getMonth()-1)+"-"+today.getDate();
 
-				var url = "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Police_Incidents/MapServer/0/query?&where=DISPATCH_DATE>="+start_date+"ANDDISPATCH_DATE <="+end_date+"ANDUCR_GENERAL>=100ANDUCR_GENERAL<=600&geometry={%22rings%22:[[[-75.392990,39.846504],%20[-74.912338,39.846504],%20[-74.912338,40.161559],%20[-75.392990,40.161559]]],%22spatialReference%22:{%22wkid%22:4326}}&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&outFields=*&inSR=4326&outSR=4326&f=pjson&pretty=true";
-				//where=DISPATCH_DATE>="+start_date+"ANDDISPATCH_DATE <="+end_date+"ANDUCR_GENERAL>=100ANDUCR_GENERAL<=600
-				console.log(start_date, end_date)
+var url = "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Police_Incidents/MapServer/0/query?&where=DISPATCH_DATE>="+start_date+"ANDDISPATCH_DATE <="+end_date+"ANDUCR_GENERAL>=100ANDUCR_GENERAL<=600&geometry={%22rings%22:[[[-75.392990,39.846504],%20[-74.912338,39.846504],%20[-74.912338,40.161559],%20[-75.392990,40.161559]]],%22spatialReference%22:{%22wkid%22:4326}}&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&outFields=*&inSR=4326&outSR=4326&f=pjson&pretty=true";
+//where=DISPATCH_DATE>="+start_date+"ANDDISPATCH_DATE <="+end_date+"ANDUCR_GENERAL>=100ANDUCR_GENERAL<=600
+console.log(start_date, end_date)
 
-				if(start_date == undefined || end_date == undefined){
-				*/
+if(start_date == undefined || end_date == undefined){
+*/
+
+//heat map crime display option
+/*L.esri.heatMapFeatureLayer("http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Police_Incidents_Last30/MapServer/0/query?geometry={%22rings%22:[[[-75.392990,39.846504],%20[-74.912338,39.846504],%20[-74.912338,40.161559],%20[-75.392990,40.161559]]],%22spatialReference%22:{%22wkid%22:4326}}&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&outFields=*&inSR=4326&outSR=4326&f=pjson&pretty=true", {
+	 max: 0.9,
+	 radius: 25,
+	 blur: 20,
+	  gradient: {
+	    0.2: "#ffff00",
+	    0.7: "#ff0000"
+	  }
+*/
 				var url = "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Police_Incidents_Last30/MapServer/0/query?geometry={%22rings%22:[[[-75.392990,39.846504],%20[-74.912338,39.846504],%20[-74.912338,40.161559],%20[-75.392990,40.161559]]],%22spatialReference%22:{%22wkid%22:4326}}&geometryType=esriGeometryPolygon&spatialRel=esriSpatialRelContains&outFields=*&inSR=4326&outSR=4326&f=pjson&pretty=true";
 
 				$.getJSON(url, 
@@ -151,7 +194,6 @@
 			}
 			getPage();
 			getCrimes();
-
 		</script>
 	</body>
 </html>
